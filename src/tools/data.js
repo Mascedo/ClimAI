@@ -15,7 +15,7 @@ export const dataHoraTool = tool(
     },
     {
         name: "dataHora",
-        description: "mostra o horario e data atual no formato dd/mm/aaaa, hh/mm am/pm. Nao precisa de entrada so pedir e ela retorna",
+        description: "mostra o horario e data atual no formato dd/mm/aaaa, hh/mm am/pm(no Brasil gtm -3). Nao precisa de entrada so pedir e ela retorna.",
         schema: z.object({})
     }
 )
