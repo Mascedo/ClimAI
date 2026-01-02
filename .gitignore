@@ -1,0 +1,7 @@
+node_modules/
+
+src/aVontadeDeTestarCoisas
+
+**/.env
+
+src/helpers/chamarOpenMeteo.js.txt
