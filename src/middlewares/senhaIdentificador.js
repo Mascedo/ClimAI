@@ -35,6 +35,7 @@ export async function verificarSenha(req, res, next) {//reinicia o contador de t
         }
 
         if(tentativas[1]>4){console.log("sim");process.exit(0)}//mata o progama caso passe do limite de tentativas
+        
         if(await criarSenha() === senha){
             return next()
         }else{
