@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: path.resolve("../.env") });
 
 
-export async function climaLocalService(cidade) {
+export async function resumoService(cidade) {
     try{
         
     }catch(error){

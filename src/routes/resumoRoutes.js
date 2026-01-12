@@ -1,9 +1,9 @@
 import { Router } from "express"
 import { verificarSenha } from "../middlewares/senhaIdentificador.js";
-import { climaLocalController } from "../controller/climaLocalController.js"
+import { resumoController } from "../controller/resumoController.js"
 
 const router = Router()
 
-router.post("/", verificarSenha, climaLocalController)
+router.post("/", verificarSenha, resumoController)
 
 export default router;

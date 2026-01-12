@@ -2,7 +2,7 @@ import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import perguntasSTRoutes from "./routes/perguntasSTRoutes.js"
-import climaLocalRoutes from "./routes/climaLocalRoutes.js"
+import resumoRoutes from "./routes/resumoRoutes.js"
 dotenv.config({ path: path.resolve(".env") });
 
 const app = express()
@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 
 app.use("/perguntas", perguntasSTRoutes)
-app.use("/climaLocal", climaLocalRoutes)
+app.use("/resumo", resumoRoutes)
 
 
 
