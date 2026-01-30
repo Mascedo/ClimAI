@@ -9,12 +9,18 @@ export async function mostrarCidadeService() {
     return await cidadeRepository.mostrar()
 }
 
-export async function criarCidadeService(nome, latitude, longitude) {
-    if(!(nome&&latitude&&longitude)){
+export async function criarCidadeService(nome, nomeUrlSafe, latitude, longitude) {
+    if(!(nome&&nomeUrlSafe&&latitude&&longitude)){
         throw new Error("Todos os campos são necessarios!")
     }
+    
+    const isUrlSafe = /^[a-z0-9-]+$/.test(nomeUrlSafe)
 
-    const cidade = {nome, latitude, longitude}
+    if (!isUrlSafe) {
+        throw new Error("nomeUrlSafe não é válido para URL")
+    }
+    
+    const cidade = {nome, nomeUrlSafe, latitude, longitude}
     return await cidadeRepository.criar(cidade)
 }
 

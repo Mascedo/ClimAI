@@ -5,6 +5,10 @@ const Cidade = mongoose.model('Cidade', {
         type: String,
         required: true
     },
+    nomeUrlSafe: {
+        type: String,
+        required: true
+    },
     longitude:{
         type: Number,
         required: true

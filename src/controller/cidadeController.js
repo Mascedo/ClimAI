@@ -11,9 +11,9 @@ export async function mostrarCidadeController(req, res, next) {
 
 export async function criarCidadeController(req, res, next) {
     try{
-        const {nome, latitude, longitude} = req.body
+        const {nome, nomeUrlSafe, latitude, longitude} = req.body
 
-        const resposta = await cidadeService.criarCidadeService(nome, latitude, longitude)
+        const resposta = await cidadeService.criarCidadeService(nome, nomeUrlSafe, latitude, longitude)
         res.status(200).json(resposta)
     }catch(error){
         next(error)

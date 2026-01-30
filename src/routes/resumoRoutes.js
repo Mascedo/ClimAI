@@ -4,6 +4,6 @@ import { resumoController } from "../controller/resumoController.js"
 
 const router = Router()
 
-router.post("/", verificarSenha, resumoController)
+router.get("/", verificarSenha, resumoController)
 
 export default router;
