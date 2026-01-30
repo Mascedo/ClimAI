@@ -7,8 +7,7 @@ dotenv.config({ path: path.resolve("../.env") });
 
 
 export async function responderPerguntasSTService(pergunta) {
-    try{
-        const prompt = ChatPromptTemplate.fromMessages([
+    const prompt = ChatPromptTemplate.fromMessages([
         [
             "system",
             `
@@ -20,26 +19,23 @@ export async function responderPerguntasSTService(pergunta) {
             -No maximo 3 paragrafos se for complicado.
             -Tente fazer um paragrafo em media.
             -Não tenha medo de citar numeros em casos simples.
-            -Não tente complicar coisas simples
-            `
-        ],
-        ["human", "{input}"]
-        ]);
+           -Não tente complicar coisas simples
+           `
+       ],
+    ["human", "{input}"]
+    ]);
 
 
 
-        const model = new ChatOpenAI({
-            model: "gpt-4o-mini",
-            temperature: 0,
-            apiKey: process.env.OPENAI_API_KEY,
-        })
+    const model = new ChatOpenAI({
+         model: "gpt-4o-mini",
+        temperature: 0,
+        apiKey: process.env.OPENAI_API_KEY,
+    })
 
-        const agent = prompt.pipe(model)
+    const agent = prompt.pipe(model)
 
-        const response = await agent.invoke({input: pergunta});
+    const response = await agent.invoke({input: pergunta});
 
-        return response;
-    }catch(error){
-        next()
-    }
+    return response;
 }

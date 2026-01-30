@@ -27,7 +27,7 @@ let tentativas = [horario(1), 0]//contador de tentaviva com horario
 
 export async function verificarSenha(req, res, next) {//reinicia o contador de tentavivas se ja tiver passado um dia
     try{ 
-        const { senha } = req.body
+        const { senha } = req.headers
 
         if(tentativas[0] !== horario(1)){
             tentativas[1] = 0
@@ -36,7 +36,7 @@ export async function verificarSenha(req, res, next) {//reinicia o contador de t
 
         if(tentativas[1]>4){console.log("sim");process.exit(0)}//mata o progama caso passe do limite de tentativas
         
-        if(await criarSenha() === senha){
+        if(await criarSenha() === senha && senha !== undefined){
             return next()
         }else{
             tentativas[1]++
