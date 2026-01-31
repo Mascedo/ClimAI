@@ -38,7 +38,7 @@ export async function criarResumoService(data, longitude, latitude, resumo, apiC
         throw new Error("Data precisa estar em formato ISO! Ex: 2020-05-30")
     }
 
-    const resumo = {
+    const resumoTotal = {
         data,
         longitude,
         latitude,
@@ -46,5 +46,5 @@ export async function criarResumoService(data, longitude, latitude, resumo, apiC
         apiCall
     }
 
-    return await resumoRepository.criar(resumo)
+    return await resumoRepository.criar(resumoTotal)
 }

@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const Resumo = mongoose.model('Resumo', {
     data: String,
-    longitude: String,
-    latitude: String,
+    longitude: Number,
+    latitude: Number,
     resumo: String,
     apiCall: Object
 })
 
-module.exports = Resumo
+export default Resumo
