@@ -15,9 +15,9 @@ export async function resumoController(req, res, next) {
 
 export async function criarResumoService(req, res, next) {
     try{
-        const {data, longitude, latitude, resumo, apiCall} = req.body
+        const {data, cidade, cidadeUrlSafe, resumo, apiCall} = req.body
 
-        const resposta = await resumoService.criarResumoService(data, longitude, latitude, resumo, apiCall)
+        const resposta = await resumoService.criarResumoService(data, cidade, cidadeUrlSafe, resumo, apiCall)
         res.status(200).json(resposta)
     }catch(error){
         next(error)

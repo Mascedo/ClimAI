@@ -13,23 +13,39 @@ export async function resumoService(nome) {
 
     const cidades = await cidadeService.mostrarCidadeService()
 
-    const existe = cidades.some(
+    const resumos = await resumoRepository.mostrar()
+
+    const existe = cidades.some(                    //verifica se cidade existe na lista de cidade
         cidade => cidade.nomeUrlSafe === nome.toLowerCase()
     )
 
     if(!existe){
         throw new Error(`Cidade ${nome}, não esta no banco de dados!`)
     }
-    
-    if(existe){
-        return existe
+
+    const cidadeNome = cidades.find(             //buscaa o nome da cidade na lista de cidade
+        cidade => cidade.nomeUrlSafe === nome.toLowerCase()
+    )
+
+    const resumoCidade = resumos.find(           // verifica se cidade esxite e buscaa o nome da cidade nos resumos
+        resumo => resumo.cidadeUrlSafe === cidadeNome.nomeUrlSafe
+    )
+
+    if(!resumoCidade){
+        throw new Error(`Cidade ${nome}, não tem resumo pronto.`)
     }
+
+    if(resumoCidade){
+        return resumoCidade
+    }
+
+
 }
 
 
-export async function criarResumoService(data, longitude, latitude, resumo, apiCall) {
-    if(!(data&&longitude&&latitude&&resumo)){
-        throw new Error("Os campo data, longitude, latitude e resumo são necessarios!")
+export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, apiCall) {
+    if(!(data&&cidade&&cidadeUrlSafe&&resumo)){
+        throw new Error("Os campo data, cidade, cidadeUrlSafe e resumo são necessarios!")
     }
 
     if(apiCall !== Object){
@@ -40,11 +56,17 @@ export async function criarResumoService(data, longitude, latitude, resumo, apiC
         throw new Error("Data precisa estar em formato ISO! Ex: 2020-05-30")
     }
 
+    const isUrlSafe = /^[a-z0-9-]+$/.test(cidadeUrlSafe)
+
+    if (!isUrlSafe) {
+        throw new Error("cidadeUrlSafe não é válido para URL")
+    }
+
     const resumoTotal = {
-        data,
-        longitude,
-        latitude,
-        resumo,
+        data, 
+        cidade, 
+        cidadeUrlSafe, 
+        resumo, 
         apiCall
     }
 
