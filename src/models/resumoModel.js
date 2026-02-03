@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 const Resumo = mongoose.model('Resumo', {
     data: String,
-    longitude: Number,
-    latitude: Number,
+    cidade: String,
     resumo: String,
     apiCall: Object
 })

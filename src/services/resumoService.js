@@ -20,10 +20,12 @@ export async function resumoService(nome) {
     if(!existe){
         throw new Error(`Cidade ${nome}, não esta no banco de dados!`)
     }
+    
     if(existe){
-        return "existe"
+        return existe
     }
 }
+
 
 export async function criarResumoService(data, longitude, latitude, resumo, apiCall) {
     if(!(data&&longitude&&latitude&&resumo)){
