@@ -45,7 +45,7 @@ export async function resumoService(nome) { // essa parte tem muito comentario e
     }
 
     if(resumoCidadeData[0].data === dataResumo()){//verifica se é a mesma data. É redundante eu sei, mas fica bonito e mais legivel assim.
-        return resumoCidade
+        return resumoCidadeData
     }
 }
 
