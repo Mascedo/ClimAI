@@ -3,10 +3,11 @@ import path from "path";
 import * as cidadeService from "./cidadeService.js";
 import dotenv from "dotenv";
 import resumoRepository from "../repositories/resumoRepository.js"
+import { dataResumo } from "../tools/data.js";
 dotenv.config({ path: path.resolve("../.env") });
 
 
-export async function resumoService(nome) {
+export async function resumoService(nome) { // essa parte tem muito comentario e é confusa. Boa sorte🍀
     if(!(nome)){
         throw new Error("O campo cidade é necessario!")
     }
@@ -23,23 +24,29 @@ export async function resumoService(nome) {
         throw new Error(`Cidade ${nome}, não esta no banco de dados!`)
     }
 
-    const cidadeNome = cidades.find(             //buscaa o nome da cidade na lista de cidade
+    const cidadeNome = cidades.find(             //busca o nome da cidade na lista de cidade
         cidade => cidade.nomeUrlSafe === nome.toLowerCase()
     )
 
-    const resumoCidade = resumos.find(           // verifica se cidade esxite e buscaa o nome da cidade nos resumos
+    const resumoCidade = resumos.filter(                        // verifica se cidade existe e busca os resumos da cidade nos resumos
         resumo => resumo.cidadeUrlSafe === cidadeNome.nomeUrlSafe
     )
 
-    if(!resumoCidade){
+    const resumoCidadeData = resumoCidade.filter(               // verifica se os resumos da cidade tem algum com a data atual
+        resumosData => resumosData.data === dataResumo()
+    )
+
+    if(!resumoCidade[0]){//busca o primeiro index para ver se essa cidade tem algum resumo
         throw new Error(`Cidade ${nome}, não tem resumo pronto.`)
     }
 
-    if(resumoCidade){
-        return resumoCidade
+    if(!resumoCidadeData[0]){//ver se tem algum resumo com memsma data e cidade. Se for undefined é pq nao tem e da o erro.
+        throw new Error(`Cidade ${nome}, não tem resumo pronto para hoje.`)
     }
 
-
+    if(resumoCidadeData[0].data === dataResumo()){//verifica se é a mesma data. É redundante eu sei, mas fica bonito e mais legivel assim.
+        return resumoCidade
+    }
 }
 
 

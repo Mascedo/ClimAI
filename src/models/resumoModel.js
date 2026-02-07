@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const Resumo = mongoose.model('Resumo', {
-    data: String,
+    data: String,//formato: AAAA-MM-DD
     cidade: String,
     cidadeUrlSafe: String,
     resumo: String,
