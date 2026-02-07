@@ -22,7 +22,7 @@ export function dataResumo() {//vai retornar a data em uma string no gtm -3
     }
 
     const resultado = partes[2].slice(0, 4) + "-" + partes[0] + "-" + partes[1]
-    return "2026-02-08"
+    return resultado
 }
 
 export const dataHoraTool = tool(
