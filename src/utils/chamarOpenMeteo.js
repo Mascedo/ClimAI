@@ -4,7 +4,7 @@ import { z } from "zod"
 
 export async function chamarOpenMeteo(latitude, longitude, data){
    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=sunset,sunrise&hourly=temperature_2m,precipitation,apparent_temperature&timezone=auto&start_date=${data}&end_date=${data}`
-
+//data no formato AAAA-MM-DD e latitude é com - ou +.
 
     try {
         const response = await axios.get(url);

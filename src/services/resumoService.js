@@ -3,7 +3,7 @@ import path from "path";
 import * as cidadeService from "./cidadeService.js";
 import dotenv from "dotenv";
 import resumoRepository from "../repositories/resumoRepository.js"
-import { dataResumo } from "../tools/data.js";
+import { dataResumo } from "../utils/data.js";
 dotenv.config({ path: path.resolve("../.env") });
 
 
