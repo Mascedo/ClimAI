@@ -59,4 +59,4 @@ export async function resumirClimaIA(latitude, longitude, data){
     
 }
 
-//console.log(await resumirClimaIA(-10.914525499404347, -37.072194934930415,)) //exemplo cidade: "nossa senhora do socorro", data: A atual
+//console.log(await resumirClimaIA(-10.852266690856467, -37.12749042510635)) //exemplo cidade: "nossa senhora do socorro", data: A atual
