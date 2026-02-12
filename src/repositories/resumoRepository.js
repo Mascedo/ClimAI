@@ -6,6 +6,10 @@ class resumoRepository {
         return await Resumo.find()
     }
 
+    async buscarId(id){
+        return await Resumo.findById(id)
+    }
+
     async criar(resumo){
         return  await Resumo.create(resumo)
     }

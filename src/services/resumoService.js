@@ -3,7 +3,9 @@ import path from "path";
 import * as cidadeService from "./cidadeService.js";
 import dotenv from "dotenv";
 import resumoRepository from "../repositories/resumoRepository.js"
+import { resumirClimaIA } from "../utils/resumirClimaIA.js"; // export async function resumirClimaIA(latitude, longitude, data)
 import { dataResumo } from "../utils/data.js";
+import mongoose from "mongoose"
 dotenv.config({ path: path.resolve("../.env") });
 
 
@@ -35,13 +37,14 @@ export async function resumoService(nome) { // essa parte tem muito comentario e
     const resumoCidadeData = resumoCidade.filter(               // verifica se os resumos da cidade tem algum com a data atual
         resumosData => resumosData.data === dataResumo()
     )
+    
+    if((!resumoCidade[0]) || (!resumoCidadeData[0])){//busca o primeiro index para ver se essa cidade tem algum resumo cirado ou na data atual e cria um
+        const resumoAI =  await resumirClimaIA(cidadeNome.latitude, cidadeNome.longitude)
+        const resumoCriado = resumoAI[1]
+        const apiCallIA = resumoAI[2]
 
-    if(!resumoCidade[0]){//busca o primeiro index para ver se essa cidade tem algum resumo
-        throw new Error(`Cidade ${nome}, não tem resumo pronto.`)
-    }
-
-    if(!resumoCidadeData[0]){//ver se tem algum resumo com memsma data e cidade. Se for undefined é pq nao tem e da o erro.
-        throw new Error(`Cidade ${nome}, não tem resumo pronto para hoje.`)
+        const resumo = await criarResumoService(dataResumo(), cidadeNome.nome, cidadeNome.nomeUrlSafe, resumoCriado, apiCallIA)
+        return await mostrarResumoService(resumo._id)
     }
 
     if(resumoCidadeData[0].data === dataResumo()){//verifica se é a mesma data. É redundante eu sei, mas fica bonito e mais legivel assim.
@@ -49,13 +52,20 @@ export async function resumoService(nome) { // essa parte tem muito comentario e
     }
 }
 
+export async function mostrarResumoService(id) {
+    if(!mongoose.isValidObjectId(id)){
+        throw new Error(`ID precisar ser uma ObjectId! ${id}`)
+    }
+
+    return await resumoRepository.buscarId(id)
+}
 
 export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, apiCall) {
     if(!(data&&cidade&&cidadeUrlSafe&&resumo)){
         throw new Error("Os campo data, cidade, cidadeUrlSafe e resumo são necessarios!")
     }
 
-    if(apiCall !== Object){
+    if(typeof apiCall !== "object"){ 
         apiCall = "Nao foi enviado!"
     }
 

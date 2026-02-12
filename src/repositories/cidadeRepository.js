@@ -5,9 +5,9 @@ class cidadeRepository {
     async mostrar(){
         return await Cidade.find()
     }
-
+    
     async criar(cidade){
-        return  await Cidade.create(cidade)
+        return await Cidade.create(cidade)
     }
 
     async deletar(id){
