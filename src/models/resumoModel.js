@@ -6,7 +6,7 @@ const Resumo = mongoose.model('Resumo', {
     cidadeUrlSafe: String,
     resumo: String,
     apiCall: Object,
-    maxMinTemp: String
+    graficoInfo: Array
 })
 
 export default Resumo
