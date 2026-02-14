@@ -43,6 +43,8 @@ export async function resumoService(nome) { // essa parte tem muito comentario e
         const resumoCriado = resumoAI[1]
         const apiCallIA = resumoAI[2]
 
+
+        
         const resumo = await criarResumoService(dataResumo(), cidadeNome.nome, cidadeNome.nomeUrlSafe, resumoCriado, apiCallIA)
         return await mostrarResumoService(resumo._id)
     }
@@ -60,13 +62,17 @@ export async function mostrarResumoService(id) {
     return await resumoRepository.buscarId(id)
 }
 
-export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, apiCall) {
+export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, apiCall, maxMinTemp) {
     if(!(data&&cidade&&cidadeUrlSafe&&resumo)){
         throw new Error("Os campo data, cidade, cidadeUrlSafe e resumo são necessarios!")
     }
 
     if(typeof apiCall !== "object"){ 
         apiCall = "Nao foi enviado!"
+    }
+
+    if(typeof maxMinTemp !== "string"){ 
+        maxMinTemp = "Nao foi enviado!"
     }
 
     if(!((data.split("").length===10&&data[4]==="-"&&data[7]==="-")&&parseInt((data.slice(5,7))) > 0 && parseInt(data.slice(5,7)) < 13 && parseInt(data.slice(8,10)) > 0 && parseInt(data.slice(8,10)) < 32)){//verifica o formato da data
@@ -84,7 +90,8 @@ export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, ap
         cidade, 
         cidadeUrlSafe, 
         resumo, 
-        apiCall
+        apiCall,
+        maxMinTemp
     }
 
     return await resumoRepository.criar(resumoTotal)

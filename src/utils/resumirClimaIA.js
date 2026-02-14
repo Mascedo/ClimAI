@@ -4,6 +4,7 @@ import { createAgent } from "langchain"
 import { ChatOpenAI } from "@langchain/openai";
 import { dataResumo } from "./data.js";
 import { chamarOpenMeteo } from "./chamarOpenMeteo.js";
+import { chamarOpenMeteograficoInfo } from "./graficosInfo.js";
 dotenv.config({ path: path.resolve("../.env") });
 
 
@@ -11,6 +12,8 @@ export async function resumirClimaIA(latitude, longitude, data){
     if(!data){//caso data não seja enviada ele pega a data atual.
         data = dataResumo()
     }
+
+    const graficoInfo = await chamarOpenMeteograficoInfo(latitude, longitude, data)
 
     const climaDia = await chamarOpenMeteo(latitude, longitude, data)
 
@@ -55,7 +58,7 @@ export async function resumirClimaIA(latitude, longitude, data){
 
     const resultadoCurto = resultado.split(/\n\s*\n/)[result.messages.length]//pega somente o ultimo paragrafo que é onde esta o resumo
 
-    return [resultadoCurto, resultado, climaDia]
+    return [resultadoCurto, resultado, climaDia, graficoInfo]
     
 }
 
