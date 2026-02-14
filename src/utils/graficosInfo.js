@@ -32,7 +32,7 @@ export async function chamarOpenMeteograficoInfo(latitude, longitude, data){
             }
         });
 
-        const minMaxTemp = minTemp + "/" + maxTemp
+        const minMaxTemp = minTemp + "°C / " + maxTemp + "°C"
 
         return [minMaxTemp, temperaturas, temperaturasAparentes, precipitacoes]
 
