@@ -4,16 +4,23 @@ import dotenv from "dotenv";
 dotenv.config({ path: path.resolve("../.env") });
 
 
-function horario(ds){//dsm significa dia e semana. Representados respectivamentes por 1 e 2. Decide oque vai sair.
+function horario(ds){
     if(ds === 1){
         const now = new Date().toLocaleString('en-US', {timeZone: 'America/Sao_Paulo'})
-        const partes = [now.slice(0,3), now.slice(3,6), now.slice(6,10)]//divide a data em sessões
-        const resultado = partes[1]+partes[0]+partes[2]//transforma 12/20/2025 para 20/12/2025
+        const partes = now.split("/")
+        
+        if(partes[0]<10){// faz que quando for um numero menor que 10 adiciona zero a esquerda, para se adequar a ISO. Exemplo: 3 => 03
+            partes[0] = "0"+partes[0]
+        }
+
+        if(partes[1]<10){// faz que quando for um numero menor que 10 adiciona zero a esquerda, para se adequar a ISO. Exemplo: 3 => 03
+            partes[1] = "0"+partes[1]
+        }
+
+        const resultado = partes[2].slice(0, 4) + "-" + partes[0] + "-" + partes[1]
         return resultado
-    }else if(ds === 2){
-        return "não fiz ainda"//eu vou fazer ainda.
     }else{
-        return "use 1 ou 2 para a função"
+        return "use 1 para a função"
     } 
 }
 
@@ -23,24 +30,16 @@ async function criarSenha() {
     return senha
 }
 
-let tentativas = [horario(1), 0]//contador de tentaviva com horario
 
 export async function verificarSenha(req, res, next) {//reinicia o contador de tentavivas se ja tiver passado um dia
     try{ 
         const { senha } = req.headers
 
-        if(tentativas[0] !== horario(1)){
-            tentativas[1] = 0
-            tentativas[0] = horario(1)
-        }
-
-        if(tentativas[1]>4){console.log("sim");process.exit(0)}//mata o progama caso passe do limite de tentativas
         
         if(await criarSenha() === senha && senha !== undefined){
             return next()
         }else{
-            tentativas[1]++
-            return res.status(401).json({ erro: `Senha incorreta. Tentativas: ${tentativas[1]} de 5`});
+            return res.status(401).json({ erro: `Senha incorreta.`});
         }
     }catch(error){
         console.error(error)
