@@ -1,7 +1,7 @@
 import path from "path";
 import crypto from "crypto";
 import dotenv from "dotenv";
-dotenv.config({ path: path.resolve(".env") });
+dotenv.config(".env");
 
 
 function horario(ds){
