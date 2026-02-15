@@ -37,7 +37,13 @@ export async function chamarOpenMeteograficoInfo(latitude, longitude, data){
 
         const minMaxTemp = minTemp + "°C / " + maxTemp + "°C"
 
-        return [minMaxTemp, temperaturas, temperaturasAparentes, precipitacoes, horarios]
+        return {
+                "minMaxTemp": minMaxTemp,
+                "temperaturas": temperaturas,
+                "temperaturasAparentes": temperaturasAparentes,
+                "precipitacoes": precipitacoes,
+                "horarios": horarios
+        }
 
     } catch (error) {
         console.error("Erro ao chamar a API:", error.message);

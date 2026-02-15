@@ -70,7 +70,7 @@ export async function criarResumoService(data, cidade, cidadeUrlSafe, resumo, ap
         apiCall = "Nao foi enviado!"
     }
 
-    if (!Array.isArray(graficoInfo)) {
+    if (typeof graficoInfo !== "object") {
         graficoInfo = null
     }
 
