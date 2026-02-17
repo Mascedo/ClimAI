@@ -2,7 +2,7 @@ import axios from "axios"
 import { transformarUrlSafe } from "./transformarUrlSafe.js"
 
 export async function chamarGeoConding(pesquisa){
-   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${pesquisa}&count=10&language=pt&format=json`
+   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${pesquisa}&count=50&language=pt&format=json`
 
 
     try {
@@ -16,12 +16,13 @@ export async function chamarGeoConding(pesquisa){
         let listaBrasil = []
 
         lista.forEach(cidade => {
-            if(cidade.country === "Brasil"){
+            if(cidade.country === "Brasil" && listaBrasil.length < 5){//busca somente cidades brasileiras e limita quando acha 5 cidades
                 listaBrasil.push({
                     "nome": cidade.name,
                     "nomeUrlSafe": transformarUrlSafe(cidade.name),
                     "latitude": cidade.latitude,
-                    "longitude": cidade.longitude
+                    "longitude": cidade.longitude,
+                    "estado": cidade.admin1
                 })
             }
         });
@@ -34,4 +35,4 @@ export async function chamarGeoConding(pesquisa){
     }
 }
 
-//console.log(await chamarGeoConding("salvado"))
+//console.log(await chamarGeoConding("são ber"))
