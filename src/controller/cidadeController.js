@@ -20,3 +20,13 @@ export async function criarCidadeController(req, res, next) {
     }
 }
 
+export async function buscarCidadeController(req, res, next) {
+    try{
+        const { nome } = req.body
+
+        const resposta = await cidadeService.buscarCidadeService(nome)
+        res.status(200).json(resposta)
+    }catch(error){
+        next(error)
+    }
+}

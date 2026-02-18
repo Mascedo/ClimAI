@@ -7,5 +7,6 @@ const router = Router()
 
 router.get("/", verificarSenha, cidadeController.mostrarCidadeController)
 router.post("/", verificarSuperSenha, cidadeController.criarCidadeController)
+router.post("/buscar", verificarSenha, cidadeController.buscarCidadeController)
 
 export default router;
